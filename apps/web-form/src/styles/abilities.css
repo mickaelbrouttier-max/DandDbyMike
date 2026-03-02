@@ -1,0 +1,127 @@
+.abilities-section {
+	grid-column: 1 / -1; /* Prend toute la largeur de la grid parente */
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	padding: 1.5rem;
+	border: var(--border-single);
+	background-color: rgba(
+		225,
+		207,
+		180,
+		0.3
+	); /* Légèrement plus foncé que le parchemin */
+	border-radius: 4px;
+}
+
+.abilities-title {
+	font-family: var(--font-display);
+	font-size: 1.5rem;
+	color: var(--color-ink);
+	text-align: center;
+	margin-bottom: 1.5rem;
+	letter-spacing: 1px;
+	border-bottom: 1px solid var(--color-gold-dark);
+	padding-bottom: 0.5rem;
+}
+
+.abilities-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1.5rem;
+}
+
+.ability-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 90px;
+	background-color: var(--color-parchment-light);
+	border: 2px solid var(--color-gold-dark);
+	border-radius: 8px 8px 30px 30px; /* Forme d'écusson basique */
+	padding: 0.5rem 0.5rem 1rem 0.5rem;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	position: relative;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.ability-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(184, 153, 71, 0.2);
+}
+
+.ability-name {
+	font-family: var(--font-display);
+	font-size: 0.65rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: var(--color-ink);
+	margin-bottom: 0.5rem;
+	text-align: center;
+	letter-spacing: 0.5px;
+}
+
+.ability-input-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 0.5rem;
+}
+
+.ability-input {
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	font-family: var(--font-serif);
+	font-size: 1.5rem;
+	font-weight: 700;
+	background-color: #fff;
+	border: 1px solid var(--color-gold-dark);
+	border-radius: 4px;
+	color: var(--color-ink);
+}
+
+.ability-input:focus {
+	outline: none;
+	border-color: var(--color-gold-aged);
+	box-shadow: 0 0 5px rgba(184, 153, 71, 0.5);
+}
+
+.ability-input:disabled {
+	background-color: #dedede;
+	cursor: not-allowed;
+}
+
+/* Modificateur calcoulé affiché au bas de l'écusson */
+.ability-modifier {
+	font-family: var(--font-display);
+	font-weight: 700;
+	font-size: 1.1rem;
+	color: var(--color-parchment-light);
+	background-color: var(--color-ink);
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	bottom: -15px;
+	border: 2px solid var(--color-gold-aged);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Retire les flèches des inputs type number sur Chrome/Safari/Edge/Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Retire les flèches sur Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}

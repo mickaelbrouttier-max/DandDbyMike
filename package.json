@@ -1,0 +1,17 @@
+{
+	"name": "dnd-monorepo",
+	"version": "1.0.0",
+	"private": true,
+	"workspaces": [
+		"packages/*",
+		"apps/*"
+	],
+	"scripts": {
+		"dev": "npm run dev --workspace=@dnd/web-form",
+		"build": "npm run build --workspaces --if-present",
+		"typecheck": "npm run typecheck --workspaces --if-present"
+	},
+	"devDependencies": {
+		"typescript": "^5.2.2"
+	}
+}

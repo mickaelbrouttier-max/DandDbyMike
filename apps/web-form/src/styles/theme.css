@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap");
+
+:root {
+	/* Couleurs principales: Or vieilli, Brun parchemin, Noir d'encre */
+	--color-ink: #1a1714;
+	--color-parchment: #f4e8d1;
+	--color-parchment-dark: #e1cfb4;
+	--color-parchment-light: #fbf7f0;
+	--color-gold-aged: #b89947;
+	--color-gold-dark: #8c7333;
+	--color-red-wax: #9e2a2b;
+
+	/* Typographie */
+	--font-serif: "Lora", Georgia, serif;
+	--font-display: "Cinzel", "Times New Roman", serif;
+
+	/* Ombres et Bordures */
+	--shadow-soft:
+		0 4px 15px rgba(0, 0, 0, 0.15), 0 0 40px rgba(139, 69, 19, 0.05) inset;
+	--border-double: 3px double var(--color-gold-aged);
+	--border-single: 1px solid var(--color-gold-dark);
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #2c2825; /* Fond sombre derrière le parchemin */
+	background-image: radial-gradient(circle, #3d3733 0%, #1a1714 100%);
+	color: var(--color-ink);
+	font-family: var(--font-serif);
+	line-height: 1.6;
+	min-height: 100vh;
+	padding: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
