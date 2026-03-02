@@ -31,12 +31,27 @@ export type AbilityScores = {
 	[K in AbilityName]: number;
 };
 
+export interface ClassConfig {
+	features: string;
+	equipment: string;
+	spells?: {
+		cantrips: string;
+		level1: string;
+	};
+}
+
 export interface CharacterConcept {
 	playerName: string;
 	charName: string;
 	race: Race | "";
 	charClass: CharacterClass | "";
 	abilities?: AbilityScores;
+	features?: string;
+	equipment?: string;
+	spells?: {
+		cantrips: string;
+		level1: string;
+	};
 	appearance: string;
 	temperament: string;
 	history: string;

@@ -8,6 +8,7 @@ import {
 	calculateModifier,
 	formatModifier,
 	ABILITY_LABELS,
+	CLASS_DATA,
 } from "@dnd/core";
 import "../styles/form.css";
 
@@ -29,6 +30,9 @@ export default function ConceptForm() {
 			wis: 10,
 			cha: 10,
 		},
+		features: "",
+		equipment: "",
+		spells: undefined,
 		appearance: "",
 		temperament: "",
 		history: "",
@@ -39,18 +43,31 @@ export default function ConceptForm() {
 	const [submitStatus, setSubmitStatus] = useState<
 		"idle" | "success" | "error"
 	>("idle");
+	const [autoFilledFields, setAutoFilledFields] = useState<boolean>(false);
 
-	// Met à jour automatiquement les caractéristiques si la race et la classe sont sélectionnées
+	// Met à jour automatiquement les caractéristiques, capacités et équipement
+	// si la race et la classe sont sélectionnées
 	useEffect(() => {
 		if (formData.race && formData.charClass) {
 			const autoAbilities = generateStandardArray(
 				formData.race as Race,
 				formData.charClass as CharacterClass,
 			);
+
+			const classConfig = CLASS_DATA[formData.charClass as CharacterClass];
+
 			setFormData((prev) => ({
 				...prev,
 				abilities: autoAbilities,
+				features: classConfig?.features || prev.features,
+				equipment: classConfig?.equipment || prev.equipment,
+				spells: classConfig?.spells,
 			}));
+
+			// Déclenche l'animation de glow temporaire
+			setAutoFilledFields(true);
+			const timer = setTimeout(() => setAutoFilledFields(false), 2000);
+			return () => clearTimeout(timer);
 		}
 	}, [formData.race, formData.charClass]);
 
@@ -111,6 +128,9 @@ export default function ConceptForm() {
 					Race: formData.race,
 					Classe: formData.charClass,
 					Caractéristiques: formData.abilities,
+					"Capacités de Classe": formData.features,
+					Équipement: formData.equipment,
+					Grimoire: formData.spells || "Non applicable",
 					Apparence: formData.appearance,
 					Tempérament: formData.temperament,
 					Histoire: formData.history,
@@ -260,7 +280,10 @@ export default function ConceptForm() {
 										const mod = calculateModifier(score);
 
 										return (
-											<div key={ability} className="ability-card">
+											<div
+												key={ability}
+												className={`ability-card ${autoFilledFields ? "auto-filled" : ""}`}
+											>
 												<span className="ability-name">
 													{ABILITY_LABELS[ability]}
 												</span>
@@ -286,6 +309,66 @@ export default function ConceptForm() {
 								)}
 							</div>
 						</div>
+					)}
+
+					{formData.charClass && (
+						<>
+							<div className="form-group full-width fade-in">
+								<label className="form-label" htmlFor="features">
+									Capacités de Classe
+								</label>
+								<textarea
+									className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
+									id="features"
+									name="features"
+									value={formData.features || ""}
+									onChange={handleChange}
+									disabled={isSubmitting}
+									placeholder="Capacités spéciales de niveau 1..."
+								/>
+							</div>
+
+							<div className="form-group full-width fade-in">
+								<label className="form-label" htmlFor="equipment">
+									Équipement de Départ
+								</label>
+								<textarea
+									className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
+									id="equipment"
+									name="equipment"
+									value={formData.equipment || ""}
+									onChange={handleChange}
+									disabled={isSubmitting}
+									placeholder="Inventaire et armes..."
+								/>
+							</div>
+
+							{formData.spells && (
+								<div className="form-group full-width fade-in">
+									<label className="form-label" htmlFor="spells">
+										Grimoire / Sorts Préparés
+									</label>
+									<textarea
+										className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
+										id="spells"
+										name="spells"
+										value={`Cantrips:\n${formData.spells.cantrips}\n\nNiveau 1:\n${formData.spells.level1}`}
+										disabled={true}
+										placeholder="Sorts..."
+									/>
+									<small
+										style={{
+											color: "var(--color-gold-dark)",
+											marginTop: "0.5rem",
+											fontStyle: "italic",
+										}}
+									>
+										* Les sorts suggérés par les archives sont scellés pour ce
+										concept.
+									</small>
+								</div>
+							)}
+						</>
 					)}
 
 					<div className="form-group full-width">
