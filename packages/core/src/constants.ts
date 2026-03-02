@@ -34,3 +34,23 @@ export const CLASS_DATA: Partial<Record<CharacterClass, ClassConfig>> = {
 		},
 	},
 };
+export const TOOLTIP_DEFINITIONS: Record<string, string> = {
+	// Caractéristiques
+	str: "Force : Puissance physique et athlétisme.",
+	dex: "Dextérité : Agilité, réflexes et équilibre.",
+	con: "Constitution : Santé, vitalité et endurance.",
+	int: "Intelligence : Mémoire, raisonnement et logique.",
+	wis: "Sagesse : Perception, intuition et instinct.",
+	cha: "Charisme : Force de personnalité et leadership.",
+
+	// Combat
+	ac: "CA (Classe d'Armure) : Difficulté à vous toucher en combat.",
+	initiative: "Initiative : Ordre de passage lors d'un affrontement.",
+	modifier:
+		"Modificateur : Le bonus (ou malus) dérivé de votre score, ajouté à vos jets de dés.",
+
+	// Magie
+	spellSlots: "Emplacements de sorts : Vos 'munitions' magiques quotidiennes.",
+	cantrips:
+		"Sorts mineurs (Cantrips) : Sorts simples et maîtrisés, utilisables à volonté sans dépenser d'emplacement.",
+};

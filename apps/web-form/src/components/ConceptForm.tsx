@@ -9,7 +9,9 @@ import {
 	formatModifier,
 	ABILITY_LABELS,
 	CLASS_DATA,
+	TOOLTIP_DEFINITIONS,
 } from "@dnd/core";
+import Tooltip from "./Tooltip";
 import "../styles/form.css";
 
 // Remplacez 'YOUR_FORMSPREE_ID' par l'ID de votre formulaire Formspree
@@ -284,9 +286,13 @@ export default function ConceptForm() {
 												key={ability}
 												className={`ability-card ${autoFilledFields ? "auto-filled" : ""}`}
 											>
-												<span className="ability-name">
-													{ABILITY_LABELS[ability]}
-												</span>
+												<Tooltip
+													content={TOOLTIP_DEFINITIONS[ability as string]}
+												>
+													<span className="ability-name">
+														{ABILITY_LABELS[ability]}
+													</span>
+												</Tooltip>
 												<div className="ability-input-container">
 													<input
 														type="number"
@@ -300,9 +306,17 @@ export default function ConceptForm() {
 														disabled={isSubmitting}
 													/>
 												</div>
-												<div className="ability-modifier" title="Modificateur">
-													{formatModifier(mod)}
-												</div>
+												<Tooltip
+													content={TOOLTIP_DEFINITIONS.modifier}
+													position="top"
+												>
+													<div
+														className="ability-modifier"
+														title="Modificateur"
+													>
+														{formatModifier(mod)}
+													</div>
+												</Tooltip>
 											</div>
 										);
 									},
@@ -346,7 +360,20 @@ export default function ConceptForm() {
 							{formData.spells && (
 								<div className="form-group full-width fade-in">
 									<label className="form-label" htmlFor="spells">
-										Grimoire / Sorts Préparés
+										Grimoire /{" "}
+										<Tooltip
+											content={TOOLTIP_DEFINITIONS.cantrips}
+											position="top"
+										>
+											Sorts mineurs
+										</Tooltip>{" "}
+										&{" "}
+										<Tooltip
+											content={TOOLTIP_DEFINITIONS.spellSlots}
+											position="top"
+										>
+											Emplacements
+										</Tooltip>
 									</label>
 									<textarea
 										className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
