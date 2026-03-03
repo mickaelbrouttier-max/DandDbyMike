@@ -15,7 +15,7 @@ import {
 	CLASS_LORE,
 } from "@dnd/core";
 import Tooltip from "./Tooltip";
-import SpellSelector from "./SpellSelector";
+import MagicSection from "./MagicSection";
 import "../styles/form.css";
 
 // Remplacez 'YOUR_FORMSPREE_ID' par l'ID de votre formulaire Formspree
@@ -71,10 +71,10 @@ export default function ConceptForm() {
 					? {
 							cantrips: [],
 							level1: [],
+							preparedLevel1: [],
 						}
 					: undefined,
 			}));
-
 			// Déclenche l'animation de glow temporaire
 			setAutoFilledFields(true);
 			const timer = setTimeout(() => setAutoFilledFields(false), 2000);
@@ -105,22 +105,6 @@ export default function ConceptForm() {
 				[ability]: value,
 			},
 		}));
-	};
-
-	const handleSpellChange = (
-		level: "cantrips" | "level1",
-		selected: string[],
-	) => {
-		setFormData((prev) => {
-			if (!prev.spells) return prev;
-			return {
-				...prev,
-				spells: {
-					...prev.spells,
-					[level]: selected,
-				},
-			};
-		});
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -162,7 +146,7 @@ export default function ConceptForm() {
 						? CLASS_LORE[formData.charClass]
 						: "Inconnue",
 					Grimoire: formData.spells
-						? `Cantrips: ${formData.spells.cantrips.filter(Boolean).join(", ")} | Niveau 1: ${formData.spells.level1.filter(Boolean).join(", ")}`
+						? `Cantrips: ${formData.spells.cantrips.filter(Boolean).join(", ")} | Connus NIV 1: ${formData.spells.level1.filter(Boolean).join(", ")} | Préparés: ${formData.spells.preparedLevel1?.filter(Boolean).join(", ") || ""}`
 						: "Non applicable",
 					Apparence: formData.appearance,
 					Tempérament: formData.temperament,
@@ -484,79 +468,20 @@ export default function ConceptForm() {
 								/>
 							</div>
 
-							{formData.spells && (
+							{(formData.spells ||
+								(formData.race &&
+									RACE_LORE[formData.race as Race]?.spells)) && (
 								<div className="form-group full-width fade-in">
-									<label className="form-label" htmlFor="spells">
-										Grimoire /{" "}
-										<Tooltip
-											content={TOOLTIP_DEFINITIONS.cantrips}
-											position="top"
-										>
-											Sorts mineurs
-										</Tooltip>{" "}
-										&{" "}
-										<Tooltip
-											content={TOOLTIP_DEFINITIONS.spellSlots}
-											position="top"
-										>
-											Emplacements
-										</Tooltip>
-									</label>
-									<div className="spells-container">
-										{CLASS_DATA[formData.charClass as CharacterClass]
-											?.spells && (
-											<>
-												{CLASS_DATA[formData.charClass as CharacterClass]!
-													.spells!.knownCantrips > 0 && (
-													<div className="spell-input-group">
-														<span className="spell-group-title">
-															Sorts Mineurs (Cantrips)
-														</span>
-														<SpellSelector
-															availableSpells={
-																CLASS_DATA[
-																	formData.charClass as CharacterClass
-																]!.spells!.spellSuggestions.cantrips
-															}
-															selectedSpells={formData.spells.cantrips}
-															maxSelection={
-																CLASS_DATA[
-																	formData.charClass as CharacterClass
-																]!.spells!.knownCantrips
-															}
-															onChange={(selected) =>
-																handleSpellChange("cantrips", selected)
-															}
-															disabled={isSubmitting}
-														/>
-													</div>
-												)}
-												{CLASS_DATA[formData.charClass as CharacterClass]!
-													.spells!.knownLevel1 > 0 && (
-													<div className="spell-input-group">
-														<span className="spell-group-title">Niveau 1</span>
-														<SpellSelector
-															availableSpells={
-																CLASS_DATA[
-																	formData.charClass as CharacterClass
-																]!.spells!.spellSuggestions.level1
-															}
-															selectedSpells={formData.spells.level1}
-															maxSelection={
-																CLASS_DATA[
-																	formData.charClass as CharacterClass
-																]!.spells!.knownLevel1
-															}
-															onChange={(selected) =>
-																handleSpellChange("level1", selected)
-															}
-															disabled={isSubmitting}
-														/>
-													</div>
-												)}
-											</>
-										)}
-									</div>
+									<MagicSection
+										charClass={formData.charClass as CharacterClass}
+										race={formData.race as Race}
+										abilities={formData.abilities}
+										spells={formData.spells}
+										onChange={(spells) =>
+											setFormData((prev) => ({ ...prev, spells }))
+										}
+										disabled={isSubmitting}
+									/>
 								</div>
 							)}
 						</>

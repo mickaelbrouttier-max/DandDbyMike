@@ -39,7 +39,12 @@
 
 .spell-checkbox-label.disabled {
 	cursor: not-allowed;
-	opacity: 0.7;
+	opacity: 0.4;
+	filter: grayscale(100%);
+}
+
+.spell-checkbox-label.disabled .spell-name {
+	color: #666;
 }
 
 /* Hide default checkbox */
@@ -113,4 +118,213 @@
 	60% {
 		transform: translate3d(4px, 0, 0);
 	}
+}
+
+/* Magic Section layout */
+.magic-section {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
+
+.spell-input-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+}
+
+.spell-group-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	border-bottom: 2px solid var(--color-gold-dark);
+	padding-bottom: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.spell-group-title {
+	font-family: var(--font-display);
+	color: var(--color-ink);
+	font-size: 1.3rem;
+	display: block;
+}
+
+.spell-group-subtitle {
+	font-size: 0.85rem;
+	color: var(--color-ink);
+	opacity: 0.8;
+	margin: 0;
+	font-style: italic;
+}
+
+.btn-reset-turn {
+	background: none;
+	border: 1px solid var(--color-gold-dark);
+	color: var(--color-gold-dark);
+	padding: 0.4rem 0.8rem;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: var(--font-serif);
+	font-size: 0.85rem;
+	transition: all 0.2s;
+}
+
+.btn-reset-turn:hover:not(:disabled) {
+	background-color: var(--color-gold-dark);
+	color: var(--color-parchment-light);
+}
+
+.btn-reset-turn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Cantrip Usage (Visual only) */
+.cantrip-usage-area {
+	margin-top: 1rem;
+	padding: 1rem;
+	background-color: rgba(26, 26, 26, 0.03);
+	border: 1px dashed var(--color-gold-dark);
+	border-radius: 4px;
+}
+
+.cantrip-usage-desc {
+	font-size: 0.85rem;
+	color: var(--color-ink);
+	margin-bottom: 0.8rem;
+	font-style: italic;
+}
+
+/* Racial Spells */
+.racial-spell-box {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.8rem 1rem;
+	background-color: rgba(184, 153, 71, 0.1);
+	border-left: 4px solid var(--color-gold-dark);
+	border-radius: 0 4px 4px 0;
+	font-family: var(--font-serif);
+}
+
+.always-prepared-badge {
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: var(--color-gold-dark);
+	font-weight: bold;
+}
+
+/* Spell Slots */
+.spell-slots-section {
+	background-color: rgba(139, 0, 0, 0.03);
+	padding: 1rem;
+	border-radius: 8px;
+	border: 1px solid rgba(139, 0, 0, 0.1);
+}
+
+.slots-container {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 0.5rem;
+}
+
+.slots-display {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.slot-count {
+	font-size: 0.9rem;
+	font-weight: bold;
+	color: var(--color-ink);
+}
+
+/* Preparation Manager */
+.preparation-counter {
+	font-family: var(--font-display);
+	color: var(--color-gold-dark);
+	font-size: 0.95rem;
+}
+
+.preparation-manager {
+	display: flex;
+	gap: 2rem;
+	margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+	.preparation-manager {
+		flex-direction: column;
+		gap: 1rem;
+	}
+}
+
+.prep-column {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.known-column {
+	background-color: rgba(26, 26, 26, 0.02);
+	padding: 1rem;
+	border-radius: 8px;
+	border: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.prepared-column {
+	background-color: rgba(184, 153, 71, 0.05);
+	padding: 1rem;
+	border-radius: 8px;
+	border: 1px solid rgba(184, 153, 71, 0.3);
+}
+
+.prep-divider {
+	width: 2px;
+	background: linear-gradient(
+		to bottom,
+		transparent,
+		var(--color-gold-dark),
+		transparent
+	);
+	opacity: 0.3;
+}
+
+@media (max-width: 768px) {
+	.prep-divider {
+		width: 100%;
+		height: 2px;
+		background: linear-gradient(
+			to right,
+			transparent,
+			var(--color-gold-dark),
+			transparent
+		);
+	}
+}
+
+.prep-column-title {
+	font-family: var(--font-display);
+	margin: 0;
+	color: var(--color-ink);
+}
+
+.prep-column-subtitle {
+	font-size: 0.8rem;
+	color: var(--color-ink);
+	opacity: 0.7;
+	margin-bottom: 1rem;
+}
+
+.empty-prep-msg {
+	font-size: 0.9rem;
+	font-style: italic;
+	color: var(--color-ink);
+	opacity: 0.6;
+	grid-column: 1 / -1;
+	text-align: center;
+	padding: 2rem 0;
 }

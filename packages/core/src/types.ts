@@ -37,7 +37,9 @@ export interface ClassConfig {
 	magicType: "Full Caster" | "Half Caster" | "Non-Caster";
 	spells?: {
 		knownCantrips: number;
-		knownLevel1: number;
+		knownLevel1: number | "ALL";
+		preparationType: "Preparator" | "Savant" | "Innate";
+		spellCastingAbility?: AbilityName;
 		spellSuggestions: {
 			cantrips: string[];
 			level1: string[];
@@ -56,6 +58,7 @@ export interface CharacterConcept {
 	spells?: {
 		cantrips: string[];
 		level1: string[];
+		preparedLevel1: string[];
 	};
 	appearance: string;
 	temperament: string;

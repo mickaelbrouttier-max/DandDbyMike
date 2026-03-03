@@ -18,12 +18,19 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 			knownCantrips: 2,
 			knownLevel1: 4,
 			spellSuggestions: {
-				cantrips: ["Moquerie vicieuse", "Prestidigitation"],
+				cantrips: [
+					"Moquerie vicieuse",
+					"Prestidigitation",
+					"Lumière",
+					"Illusion mineure",
+				],
 				level1: [
 					"Mot de guérison",
 					"Charme-personne",
 					"Sommeil",
 					"Vague tonnante",
+					"Soins",
+					"Détection de la magie",
 				],
 			},
 		},
@@ -36,10 +43,18 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		magicType: "Full Caster",
 		spells: {
 			knownCantrips: 3,
-			knownLevel1: 2, // Technically prepared spells, but 2-3 is a good average for level 1
+			knownLevel1: 10, // All level 1 cleric spells are known
+			preparesSpells: true,
+			spellCastingAbility: "wis",
 			spellSuggestions: {
-				cantrips: ["Flamme sacrée", "Guidance", "Thaumaturgie"],
-				level1: ["Soins", "Bénédiction"],
+				cantrips: ["Flamme sacrée", "Guidance", "Thaumaturgie", "Lumière"],
+				level1: [
+					"Soins",
+					"Bénédiction",
+					"Mot de guérison",
+					"Détection de la magie",
+					"Bouclier",
+				],
 			},
 		},
 	},
@@ -50,10 +65,18 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		magicType: "Full Caster",
 		spells: {
 			knownCantrips: 2,
-			knownLevel1: 2,
+			knownLevel1: "ALL",
+			preparationType: "Preparator",
+			spellCastingAbility: "wis",
 			spellSuggestions: {
-				cantrips: ["Gourdin magique", "Assistance"],
-				level1: ["Enchevêtrement", "Mot de guérison"],
+				cantrips: ["Gourdin magique", "Assistance", "Guidance"],
+				level1: [
+					"Enchevêtrement",
+					"Mot de guérison",
+					"Soins",
+					"Charme-personne",
+					"Détection de la magie",
+				],
 			},
 		},
 	},
@@ -73,6 +96,8 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		spells: {
 			knownCantrips: 3,
 			knownLevel1: 6, // 6 in spellbook
+			preparationType: "Savant",
+			spellCastingAbility: "int",
 			spellSuggestions: {
 				cantrips: ["Trait de feu", "Prestidigitation", "Illusion mineure"],
 				level1: [
@@ -102,9 +127,22 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		spells: {
 			knownCantrips: 2,
 			knownLevel1: 2,
+			preparationType: "Innate",
+			spellCastingAbility: "cha",
 			spellSuggestions: {
-				cantrips: ["Décharge occulte", "Illusion mineure"],
-				level1: ["Maléfice", "Armure d'Agathys"],
+				cantrips: [
+					"Décharge occulte",
+					"Illusion mineure",
+					"Contact glacial",
+					"Prestidigitation",
+				],
+				level1: [
+					"Maléfice",
+					"Armure d'Agathys",
+					"Charme-personne",
+					"Armure de mage",
+					"Protection contre le Mal et le Bien",
+				],
 			},
 		},
 	},
@@ -113,14 +151,37 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		equipment:
 			"- Épée longue\n- Bouclier\n- 5 Javelots\n- Pack de prêtre\n- Cotte de mailles et symbole sacré",
 		magicType: "Half Caster",
-		// Spells start at level 2
+		spells: {
+			knownCantrips: 0,
+			knownLevel1: "ALL",
+			preparationType: "Preparator",
+			spellCastingAbility: "cha",
+			spellSuggestions: {
+				cantrips: [],
+				level1: ["Soins", "Bénédiction", "Bouclier de la foi", "Héroïsme"],
+			},
+		},
 	},
 	[CharacterClass.Rodeur]: {
 		features: "Ennemi favori.\nExplorateur né (Terrain favori).",
 		equipment:
 			"- Armure d'écailles ou Armure de cuir\n- Deux épées courtes\n- Pack d'exploration\n- Arc long et carquois (20 flèches)",
 		magicType: "Half Caster",
-		// Spells start at level 2
+		spells: {
+			knownCantrips: 0,
+			knownLevel1: 2,
+			preparationType: "Innate",
+			spellCastingAbility: "wis",
+			spellSuggestions: {
+				cantrips: [],
+				level1: [
+					"Soins",
+					"Enchevêtrement",
+					"Marque du chasseur",
+					"Communication avec les animaux",
+				],
+			},
+		},
 	},
 	[CharacterClass.Roublard]: {
 		features:
@@ -138,14 +199,25 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		spells: {
 			knownCantrips: 4,
 			knownLevel1: 2,
+			preparationType: "Innate",
+			spellCastingAbility: "cha",
 			spellSuggestions: {
 				cantrips: [
 					"Trait de feu",
 					"Lumière",
 					"Contact glacial",
 					"Prestidigitation",
+					"Illusion mineure",
 				],
-				level1: ["Bouclier", "Projectile magique"],
+				level1: [
+					"Bouclier",
+					"Projectile magique",
+					"Armure de mage",
+					"Sommeil",
+					"Détection de la magie",
+					"Charme-personne",
+					"Vague tonnante",
+				],
 			},
 		},
 	},

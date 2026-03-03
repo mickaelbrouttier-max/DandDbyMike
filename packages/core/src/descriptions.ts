@@ -94,31 +94,31 @@ export const FEATURE_DESCRIPTIONS: Record<string, string> = {
 };
 
 export const SPELL_DESCRIPTIONS: Record<string, string> = {
-	// Cantrips
+	// Cantrips (Sorts Mineurs - Choix définitifs, utilisables à volonté)
 	"Moquerie vicieuse":
-		"Moquerie vicieuse : Insulte magique. Inflige 1d4 dégâts psychiques et désavantage l'attaque de la victime.",
+		"Moquerie vicieuse [1 Action] : Insulte magique. Inflige 1d4 dégâts psychiques et désavantage l'attaque de la victime.",
 	Prestidigitation:
-		"Prestidigitation : Tour de magie mineur inoffensif (créer une étincelle, nettoyer une tache, refroidir un objet).",
+		"Prestidigitation [1 Action] : Tour de magie mineur inoffensif (créer une étincelle, nettoyer une tache, refroidir un objet).",
 	"Flamme sacrée":
-		"Flamme sacrée : Un rayon divin s'abat, infligeant 1d8 dégâts radiants (pas de jet d'attaque, la cible esquive).",
+		"Flamme sacrée [1 Action] : Un rayon divin s'abat, infligeant 1d8 dégâts radiants (pas de jet d'attaque, la cible esquive).",
 	Guidance:
-		"Guidance : Assistance divine touchant une cible et lui offrant +1d4 à son prochain test de caractéristique.",
+		"Guidance [1 Action] : Assistance divine touchant une cible et lui offrant +1d4 à son prochain test de caractéristique (hors combat).",
 	Thaumaturgie:
-		"Thaumaturgie : Manifestation de micro-miracles religieux (voix tonitruante, faire trembler le sol, changer la couleur des flammes).",
+		"Thaumaturgie [1 Action] : Manifestation de micro-miracles religieux (voix tonitruante, faire trembler le sol, changer la couleur des flammes).",
 	"Gourdin magique":
-		"Gourdin magique : Insuffle la magie dans une massue de bois pour qu'elle inflige 1d8 dégâts en utilisant votre Sagesse.",
+		"Gourdin magique [Action Bonus] : Insuffle la magie dans une massue de bois pour qu'elle inflige 1d8 dégâts en utilisant votre Sagesse.",
 	Assistance:
-		"Assistance : Vous aidez une créature, lui octroyant un Avantage à son prochain jet de caractéristique.",
+		"Assistance [1 Action] : Vous aidez une créature, lui octroyant un Avantage à son prochain jet de caractéristique.",
 	"Trait de feu":
-		"Trait de feu : Vous lancez un projectile flamboyant infligeant 1d10 dégâts de feu en ligne droite.",
+		"Trait de feu [1 Action] : Vous lancez un projectile flamboyant infligeant 1d10 dégâts de feu en ligne droite.",
 	"Illusion mineure":
-		"Illusion mineure : Fabrique un son léger ou une petite image illusoire fixe pour leurrer les sens.",
+		"Illusion mineure [1 Action] : Fabrique un son léger ou une petite image illusoire fixe (5 min) pour leurrer les sens.",
 	"Décharge occulte":
-		"Décharge occulte : Le cantrip d'attaque ultime. Un faisceau de force crépitant cinglant l'ennemi (1d10 dégâts de force).",
+		"Décharge occulte [1 Action] : Le cantrip d'attaque ultime. Un faisceau de force crépitant cinglant l'ennemi (1d10 dégâts de force).",
 	Lumière:
-		"Lumière : Fait briller violemment un objet de la taille d'une torche lumineuse inextinguible.",
+		"Lumière [1 Action] : Fait briller violemment un objet de la taille d'une torche lumineuse inextinguible (1 heure).",
 	"Contact glacial":
-		"Contact glacial : Main squelettique assaillant l'ennemi de dégâts nécrotiques (1d8) et l'empêchant de récupérer des PV.",
+		"Contact glacial [1 Action] : Main squelettique assaillant l'ennemi de dégâts nécrotiques (1d8) et l'empêchant de récupérer des PV.",
 
 	// Level 1
 	"Mot de guérison":
