@@ -11,6 +11,8 @@ import {
 	CLASS_DATA,
 	TOOLTIP_DEFINITIONS,
 	FEATURE_DESCRIPTIONS,
+	RACE_LORE,
+	CLASS_LORE,
 } from "@dnd/core";
 import Tooltip from "./Tooltip";
 import SpellSelector from "./SpellSelector";
@@ -155,6 +157,10 @@ export default function ConceptForm() {
 					Caractéristiques: formData.abilities,
 					"Capacités de Classe": formData.features,
 					Équipement: formData.equipment,
+					Héritage: formData.race ? RACE_LORE[formData.race] : "Inconnu",
+					"Voie du Héros": formData.charClass
+						? CLASS_LORE[formData.charClass]
+						: "Inconnue",
 					Grimoire: formData.spells
 						? `Cantrips: ${formData.spells.cantrips.filter(Boolean).join(", ")} | Niveau 1: ${formData.spells.level1.filter(Boolean).join(", ")}`
 						: "Non applicable",
@@ -270,6 +276,12 @@ export default function ConceptForm() {
 								</option>
 							))}
 						</select>
+						{formData.race && RACE_LORE[formData.race] && (
+							<div className="lore-box fade-in">
+								<strong>Héritage : </strong>
+								{RACE_LORE[formData.race]}
+							</div>
+						)}
 					</div>
 
 					<div className="form-group">
@@ -294,6 +306,12 @@ export default function ConceptForm() {
 								</option>
 							))}
 						</select>
+						{formData.charClass && CLASS_LORE[formData.charClass] && (
+							<div className="lore-box fade-in">
+								<strong>Voie du Héros : </strong>
+								{CLASS_LORE[formData.charClass]}
+							</div>
+						)}
 					</div>
 
 					{/* Grille des Caractéristiques */}

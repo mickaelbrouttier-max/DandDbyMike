@@ -244,3 +244,35 @@
 	border-color: var(--color-gold-dark);
 	box-shadow: 0 0 4px rgba(184, 153, 71, 0.2);
 }
+
+/* Phase 8: Dynamic Lore Box */
+.lore-box {
+	margin-top: 0.8rem;
+	padding: 1rem;
+	background-color: var(--color-parchment-light);
+	border: 1px solid var(--color-gold-aged);
+	border-radius: 2px;
+	font-family: var(--font-serif);
+	font-style: italic;
+	color: var(--color-ink-light);
+	line-height: 1.5;
+	position: relative;
+}
+
+.lore-box::before {
+	content: "";
+	position: absolute;
+	top: 3px;
+	bottom: 3px;
+	left: 3px;
+	right: 3px;
+	border: 1px dotted rgba(184, 153, 71, 0.5); /* subtle gold dotted inner border */
+	pointer-events: none;
+}
+
+.lore-box strong {
+	font-weight: bold;
+	color: var(--color-gold-dark);
+	font-style: normal;
+	font-variant: small-caps;
+}
