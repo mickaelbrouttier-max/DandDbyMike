@@ -48,6 +48,49 @@ export const FEATURE_DESCRIPTIONS: Record<string, string> = {
 		"Jargon des voleurs : Mélange d'argot et de signes permettant de transmettre des messages codés aux initiés de la pègre.",
 	"Origine ensorcelée":
 		"Origine ensorcelée : La source innée de l'anomalie de votre sang (ex: Ancêtre Dragon, Résurgence de Magie Sauvage).",
+	// Raciales
+	"Apprentissage Rapide":
+		"Apprentissage Rapide : Vous gagnez la maîtrise d'une compétence supplémentaire de votre choix.",
+	Détermination:
+		"Détermination : Vous pouvez refaire un jet de sauvegarde raté (une fois par jour).",
+	"Vision dans le noir":
+		"Vision dans le noir : Permet de voir dans la pénombre comme en plein jour et dans le noir complet comme dans la pénombre (jusqu'à 18m).",
+	"Sens Aiguisés":
+		"Sens Aiguisés : Vous avez la maîtrise de la compétence Perception (Sagesse).",
+	"Ascendance Féerique":
+		"Ascendance Féerique : Vous avez un Avantage aux jets de sauvegarde contre le charme et la magie ne peut pas vous endormir.",
+	Transe:
+		"Transe : Vous n'avez pas besoin de dormir et méditez profondément 4 heures par jour au lieu de faire une nuit de repos de 8 heures.",
+	"Résistance Naine":
+		"Résistance Naine : Avantage aux jets de sauvegarde contre le poison et résistance aux dégâts de poison.",
+	"Formation Martiale Naine":
+		"Formation Martiale Naine : Maîtrise des haches, marteaux de guerre et outils d'artisan.",
+	Chanceux:
+		"Chanceux : Relancez gratuitement les « 1 » obtenus au d20 sur vos attaques, jets de caractéristique et de sauvegarde (une seule fois par jet).",
+	Bravoure:
+		"Bravoure : Vous avez un Avantage aux jets de sauvegarde pour éviter d'être terrorisé.",
+	"Agilité Halfeline":
+		"Agilité Halfeline : Vous pouvez traverser l'espace de toute créature de taille supérieure à la vôtre.",
+	"Ascendance Draconique":
+		"Ascendance Draconique : Vous choisissez un type de dragon (Feu, Froid, Acide, Foudre, Poison). Cela détermine votre Souffle et vos Résistances.",
+	"Souffle Draconique":
+		"Souffle Draconique : Vous pouvez exhaler une ligne ou un cône d'énergie destructrice infligeant 2d6 dégâts de votre élément (avec jet de sauvegarde).",
+	"Résistance aux Dégâts":
+		"Résistance aux Dégâts : Vous subissez la moitié des dégâts sur l'élément lié à votre type de dragon.",
+	Polyvalence:
+		"Polyvalence : Vous gagnez la maîtrise de deux compétences supplémentaires de votre choix.",
+	Menaçant:
+		"Menaçant : Vous avez la maîtrise de la compétence Intimidation (Charisme).",
+	"Endurance Implacable":
+		"Endurance Implacable : Lorsque vous devriez tomber à 0 points de vie, vous pouvez choisir de tomber à 1 PV à la place (une fois par jour).",
+	"Attaques Sauvages":
+		"Attaques Sauvages : En cas de Coup Critique au corps-à-corps, lancez un dé de dégât supplémentaire de l'arme.",
+	"Résistance Infernale":
+		"Résistance Infernale : Vous êtes naturellement résistant aux dégâts de Feu (moitié des dégâts).",
+	"Ascendance Infernale":
+		"Ascendance Infernale : Vous connaissez le sort mineur Thaumaturgie et découvrirez des magies de feu impies en montant de niveau.",
+	"Ruse Gnomique":
+		"Ruse Gnomique : Vous avez un Avantage à tous les jets de sauvegarde d'Intelligence, Sagesse, et Charisme contre la magie.",
 };
 
 export const SPELL_DESCRIPTIONS: Record<string, string> = {

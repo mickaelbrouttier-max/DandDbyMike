@@ -279,7 +279,51 @@ export default function ConceptForm() {
 						{formData.race && RACE_LORE[formData.race] && (
 							<div className="lore-box fade-in">
 								<strong>Héritage : </strong>
-								{RACE_LORE[formData.race]}
+								<span>{RACE_LORE[formData.race]!.description}</span>
+								<ul style={{ marginTop: "0.5rem", paddingLeft: "1.2rem" }}>
+									<li>
+										<span className="mechanical-highlight">Bonus :</span>{" "}
+										<span className="mechanical-highlight">
+											{RACE_LORE[formData.race]!.bonuses}
+										</span>
+									</li>
+									<li>
+										<span className="mechanical-highlight">Capacités :</span>{" "}
+										{RACE_LORE[formData.race]!.abilities.map((ability, idx) => {
+											const desc = FEATURE_DESCRIPTIONS[ability];
+											return (
+												<span key={`race-ability-${ability}`}>
+													{desc ? (
+														<Tooltip content={desc} position="top">
+															<span
+																style={{
+																	cursor: "help",
+																	borderBottom:
+																		"1px dotted var(--color-gold-dark)",
+																}}
+															>
+																{ability}
+															</span>
+														</Tooltip>
+													) : (
+														ability
+													)}
+													{idx < RACE_LORE[formData.race]!.abilities.length - 1
+														? ", "
+														: ""}
+												</span>
+											);
+										})}
+									</li>
+									{RACE_LORE[formData.race]!.spells && (
+										<li>
+											<span className="mechanical-highlight">
+												Magie innée :
+											</span>{" "}
+											{RACE_LORE[formData.race]!.spells}
+										</li>
+									)}
+								</ul>
 							</div>
 						)}
 					</div>
@@ -309,7 +353,27 @@ export default function ConceptForm() {
 						{formData.charClass && CLASS_LORE[formData.charClass] && (
 							<div className="lore-box fade-in">
 								<strong>Voie du Héros : </strong>
-								{CLASS_LORE[formData.charClass]}
+								<span>{CLASS_LORE[formData.charClass]!.description}</span>
+								<ul style={{ marginTop: "0.5rem", paddingLeft: "1.2rem" }}>
+									<li>
+										<span className="mechanical-highlight">Avantage :</span>{" "}
+										{CLASS_LORE[formData.charClass]!.advantage}
+									</li>
+									<li>
+										<span className="mechanical-highlight">
+											Compétences clés :
+										</span>{" "}
+										<span className="mechanical-highlight">
+											{CLASS_LORE[formData.charClass]!.keyStats}
+										</span>
+									</li>
+									<li>
+										<span className="mechanical-highlight">
+											Équipement signature :
+										</span>{" "}
+										{CLASS_LORE[formData.charClass]!.equipment}
+									</li>
+								</ul>
 							</div>
 						)}
 					</div>
