@@ -34,9 +34,14 @@ export type AbilityScores = {
 export interface ClassConfig {
 	features: string;
 	equipment: string;
+	magicType: "Full Caster" | "Half Caster" | "Non-Caster";
 	spells?: {
-		cantrips: string;
-		level1: string;
+		knownCantrips: number;
+		knownLevel1: number;
+		spellSuggestions: {
+			cantrips: string[];
+			level1: string[];
+		};
 	};
 }
 
@@ -49,8 +54,8 @@ export interface CharacterConcept {
 	features?: string;
 	equipment?: string;
 	spells?: {
-		cantrips: string;
-		level1: string;
+		cantrips: string[];
+		level1: string[];
 	};
 	appearance: string;
 	temperament: string;

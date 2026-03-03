@@ -183,3 +183,64 @@
 	background: var(--color-gold-dark);
 	border-radius: 4px;
 }
+
+/* Phase 6: Features Display */
+.features-display {
+	background-color: var(--color-parchment-light);
+	border: 1px solid var(--color-gold-dark);
+	padding: 1rem;
+	min-height: 100px;
+	border-radius: 4px;
+	color: var(--color-ink);
+	font-family: var(--font-serif);
+	line-height: 1.5;
+}
+
+.features-display ul {
+	margin: 0;
+	padding-left: 1.5rem;
+}
+
+.features-display li {
+	margin-bottom: 0.5rem;
+}
+
+/* Phase 6: Spell Inputs */
+.spells-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	background-color: var(--color-parchment-light);
+	border: 1px solid var(--color-gold-dark);
+	padding: 1rem;
+}
+
+.spell-input-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.spell-group-title {
+	font-family: var(--font-display);
+	font-weight: bold;
+	color: var(--color-gold-dark);
+	border-bottom: 1px solid var(--color-gold-aged);
+	padding-bottom: 0.25rem;
+}
+
+.spell-input {
+	background-color: #fff;
+	border: 1px dashed var(--color-gold-aged);
+	color: var(--color-ink);
+	font-family: var(--font-serif);
+	padding: 0.5rem;
+	transition: all 0.3s ease;
+}
+
+.spell-input:focus {
+	outline: none;
+	border-style: solid;
+	border-color: var(--color-gold-dark);
+	box-shadow: 0 0 4px rgba(184, 153, 71, 0.2);
+}

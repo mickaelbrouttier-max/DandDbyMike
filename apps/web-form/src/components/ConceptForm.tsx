@@ -63,7 +63,12 @@ export default function ConceptForm() {
 				abilities: autoAbilities,
 				features: classConfig?.features || "",
 				equipment: classConfig?.equipment || "",
-				spells: classConfig?.spells,
+				spells: classConfig?.spells
+					? {
+							cantrips: new Array(classConfig.spells.knownCantrips).fill(""),
+							level1: new Array(classConfig.spells.knownLevel1).fill(""),
+						}
+					: undefined,
 			}));
 
 			// Déclenche l'animation de glow temporaire
@@ -96,6 +101,25 @@ export default function ConceptForm() {
 				[ability]: value,
 			},
 		}));
+	};
+
+	const handleSpellChange = (
+		level: "cantrips" | "level1",
+		index: number,
+		value: string,
+	) => {
+		setFormData((prev) => {
+			if (!prev.spells) return prev;
+			const updatedLevel = [...prev.spells[level]];
+			updatedLevel[index] = value;
+			return {
+				...prev,
+				spells: {
+					...prev.spells,
+					[level]: updatedLevel,
+				},
+			};
+		});
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -132,7 +156,9 @@ export default function ConceptForm() {
 					Caractéristiques: formData.abilities,
 					"Capacités de Classe": formData.features,
 					Équipement: formData.equipment,
-					Grimoire: formData.spells || "Non applicable",
+					Grimoire: formData.spells
+						? `Cantrips: ${formData.spells.cantrips.filter(Boolean).join(", ")} | Niveau 1: ${formData.spells.level1.filter(Boolean).join(", ")}`
+						: "Non applicable",
 					Apparence: formData.appearance,
 					Tempérament: formData.temperament,
 					Histoire: formData.history,
@@ -331,15 +357,15 @@ export default function ConceptForm() {
 								<label className="form-label" htmlFor="features">
 									Capacités de Classe
 								</label>
-								<textarea
-									className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
-									id="features"
-									name="features"
-									value={formData.features || ""}
-									onChange={handleChange}
-									disabled={isSubmitting}
-									placeholder="Capacités spéciales de niveau 1..."
-								/>
+								<div
+									className={`features-display ${autoFilledFields ? "auto-filled" : ""}`}
+								>
+									<ul>
+										{formData.features?.split("\n").map((feature, idx) => (
+											<li key={idx}>{feature}</li>
+										))}
+									</ul>
+								</div>
 							</div>
 
 							<div className="form-group full-width fade-in">
@@ -375,24 +401,64 @@ export default function ConceptForm() {
 											Emplacements
 										</Tooltip>
 									</label>
-									<textarea
-										className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
-										id="spells"
-										name="spells"
-										value={`Cantrips:\n${formData.spells.cantrips}\n\nNiveau 1:\n${formData.spells.level1}`}
-										disabled={true}
-										placeholder="Sorts..."
-									/>
-									<small
-										style={{
-											color: "var(--color-gold-dark)",
-											marginTop: "0.5rem",
-											fontStyle: "italic",
-										}}
-									>
-										* Les sorts suggérés par les archives sont scellés pour ce
-										concept.
-									</small>
+									<div className="spells-container">
+										{formData.spells.cantrips.length > 0 && (
+											<div className="spell-input-group">
+												<span className="spell-group-title">
+													Sorts Mineurs (Cantrips)
+												</span>
+												{formData.spells.cantrips.map((spell, idx) => {
+													const suggestions =
+														CLASS_DATA[formData.charClass as CharacterClass]
+															?.spells?.spellSuggestions.cantrips || [];
+													const suggestion =
+														suggestions[idx % suggestions.length] || "Sort";
+													return (
+														<input
+															key={`cantrip-${idx}`}
+															type="text"
+															className="spell-input"
+															value={spell}
+															onChange={(e) =>
+																handleSpellChange(
+																	"cantrips",
+																	idx,
+																	e.target.value,
+																)
+															}
+															placeholder={`Ex: ${suggestion}`}
+															disabled={isSubmitting}
+														/>
+													);
+												})}
+											</div>
+										)}
+										{formData.spells.level1.length > 0 && (
+											<div className="spell-input-group">
+												<span className="spell-group-title">Niveau 1</span>
+												{formData.spells.level1.map((spell, idx) => {
+													const suggestions =
+														CLASS_DATA[formData.charClass as CharacterClass]
+															?.spells?.spellSuggestions.level1 || [];
+													const suggestion =
+														suggestions[idx % suggestions.length] || "Sort";
+													return (
+														<input
+															key={`level1-${idx}`}
+															type="text"
+															className="spell-input"
+															value={spell}
+															onChange={(e) =>
+																handleSpellChange("level1", idx, e.target.value)
+															}
+															placeholder={`Ex: ${suggestion}`}
+															disabled={isSubmitting}
+														/>
+													);
+												})}
+											</div>
+										)}
+									</div>
 								</div>
 							)}
 						</>
