@@ -61,8 +61,8 @@ export default function ConceptForm() {
 			setFormData((prev) => ({
 				...prev,
 				abilities: autoAbilities,
-				features: classConfig?.features || prev.features,
-				equipment: classConfig?.equipment || prev.equipment,
+				features: classConfig?.features || "",
+				equipment: classConfig?.equipment || "",
 				spells: classConfig?.spells,
 			}));
 
