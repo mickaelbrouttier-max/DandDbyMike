@@ -17,6 +17,8 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		spells: {
 			knownCantrips: 2,
 			knownLevel1: 4,
+			preparationType: "Innate",
+			spellCastingAbility: "cha",
 			spellSuggestions: {
 				cantrips: [
 					"Moquerie vicieuse",
@@ -43,8 +45,8 @@ export const CLASS_DATA: Record<CharacterClass, ClassConfig> = {
 		magicType: "Full Caster",
 		spells: {
 			knownCantrips: 3,
-			knownLevel1: 10, // All level 1 cleric spells are known
-			preparesSpells: true,
+			knownLevel1: "ALL",
+			preparationType: "Preparator",
 			spellCastingAbility: "wis",
 			spellSuggestions: {
 				cantrips: ["Flamme sacrée", "Guidance", "Thaumaturgie", "Lumière"],
