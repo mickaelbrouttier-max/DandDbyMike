@@ -10,8 +10,10 @@ import {
 	ABILITY_LABELS,
 	CLASS_DATA,
 	TOOLTIP_DEFINITIONS,
+	FEATURE_DESCRIPTIONS,
 } from "@dnd/core";
 import Tooltip from "./Tooltip";
+import SpellSelector from "./SpellSelector";
 import "../styles/form.css";
 
 // Remplacez 'YOUR_FORMSPREE_ID' par l'ID de votre formulaire Formspree
@@ -65,8 +67,8 @@ export default function ConceptForm() {
 				equipment: classConfig?.equipment || "",
 				spells: classConfig?.spells
 					? {
-							cantrips: new Array(classConfig.spells.knownCantrips).fill(""),
-							level1: new Array(classConfig.spells.knownLevel1).fill(""),
+							cantrips: [],
+							level1: [],
 						}
 					: undefined,
 			}));
@@ -105,18 +107,15 @@ export default function ConceptForm() {
 
 	const handleSpellChange = (
 		level: "cantrips" | "level1",
-		index: number,
-		value: string,
+		selected: string[],
 	) => {
 		setFormData((prev) => {
 			if (!prev.spells) return prev;
-			const updatedLevel = [...prev.spells[level]];
-			updatedLevel[index] = value;
 			return {
 				...prev,
 				spells: {
 					...prev.spells,
-					[level]: updatedLevel,
+					[level]: selected,
 				},
 			};
 		});
@@ -361,9 +360,29 @@ export default function ConceptForm() {
 									className={`features-display ${autoFilledFields ? "auto-filled" : ""}`}
 								>
 									<ul>
-										{formData.features?.split("\n").map((feature, idx) => (
-											<li key={idx}>{feature}</li>
-										))}
+										{formData.features?.split("\n").map((feature, idx) => {
+											const featureName = feature.split(" (")[0].trim();
+											const description = FEATURE_DESCRIPTIONS[featureName];
+											return (
+												<li key={idx}>
+													{description ? (
+														<Tooltip content={description} position="top">
+															<span
+																style={{
+																	cursor: "help",
+																	borderBottom:
+																		"2px dotted var(--color-gold-dark)",
+																}}
+															>
+																{feature}
+															</span>
+														</Tooltip>
+													) : (
+														feature
+													)}
+												</li>
+											);
+										})}
 									</ul>
 								</div>
 							</div>
@@ -402,61 +421,58 @@ export default function ConceptForm() {
 										</Tooltip>
 									</label>
 									<div className="spells-container">
-										{formData.spells.cantrips.length > 0 && (
-											<div className="spell-input-group">
-												<span className="spell-group-title">
-													Sorts Mineurs (Cantrips)
-												</span>
-												{formData.spells.cantrips.map((spell, idx) => {
-													const suggestions =
-														CLASS_DATA[formData.charClass as CharacterClass]
-															?.spells?.spellSuggestions.cantrips || [];
-													const suggestion =
-														suggestions[idx % suggestions.length] || "Sort";
-													return (
-														<input
-															key={`cantrip-${idx}`}
-															type="text"
-															className="spell-input"
-															value={spell}
-															onChange={(e) =>
-																handleSpellChange(
-																	"cantrips",
-																	idx,
-																	e.target.value,
-																)
+										{CLASS_DATA[formData.charClass as CharacterClass]
+											?.spells && (
+											<>
+												{CLASS_DATA[formData.charClass as CharacterClass]!
+													.spells!.knownCantrips > 0 && (
+													<div className="spell-input-group">
+														<span className="spell-group-title">
+															Sorts Mineurs (Cantrips)
+														</span>
+														<SpellSelector
+															availableSpells={
+																CLASS_DATA[
+																	formData.charClass as CharacterClass
+																]!.spells!.spellSuggestions.cantrips
 															}
-															placeholder={`Ex: ${suggestion}`}
+															selectedSpells={formData.spells.cantrips}
+															maxSelection={
+																CLASS_DATA[
+																	formData.charClass as CharacterClass
+																]!.spells!.knownCantrips
+															}
+															onChange={(selected) =>
+																handleSpellChange("cantrips", selected)
+															}
 															disabled={isSubmitting}
 														/>
-													);
-												})}
-											</div>
-										)}
-										{formData.spells.level1.length > 0 && (
-											<div className="spell-input-group">
-												<span className="spell-group-title">Niveau 1</span>
-												{formData.spells.level1.map((spell, idx) => {
-													const suggestions =
-														CLASS_DATA[formData.charClass as CharacterClass]
-															?.spells?.spellSuggestions.level1 || [];
-													const suggestion =
-														suggestions[idx % suggestions.length] || "Sort";
-													return (
-														<input
-															key={`level1-${idx}`}
-															type="text"
-															className="spell-input"
-															value={spell}
-															onChange={(e) =>
-																handleSpellChange("level1", idx, e.target.value)
+													</div>
+												)}
+												{CLASS_DATA[formData.charClass as CharacterClass]!
+													.spells!.knownLevel1 > 0 && (
+													<div className="spell-input-group">
+														<span className="spell-group-title">Niveau 1</span>
+														<SpellSelector
+															availableSpells={
+																CLASS_DATA[
+																	formData.charClass as CharacterClass
+																]!.spells!.spellSuggestions.level1
 															}
-															placeholder={`Ex: ${suggestion}`}
+															selectedSpells={formData.spells.level1}
+															maxSelection={
+																CLASS_DATA[
+																	formData.charClass as CharacterClass
+																]!.spells!.knownLevel1
+															}
+															onChange={(selected) =>
+																handleSpellChange("level1", selected)
+															}
 															disabled={isSubmitting}
 														/>
-													);
-												})}
-											</div>
+													</div>
+												)}
+											</>
 										)}
 									</div>
 								</div>

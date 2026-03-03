@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./styles/theme.css";
 import "./styles/abilities.css";
+import "./styles/tooltip.css";
+import "./styles/spells.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
