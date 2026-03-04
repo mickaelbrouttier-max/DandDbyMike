@@ -172,6 +172,115 @@
 	}
 }
 
+/* Medieval Modal Styles */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(4px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	animation: fadeIn 0.4s ease-out;
+}
+
+.medieval-modal {
+	background-color: var(--color-parchment);
+	background-image: url("https://www.transparenttextures.com/patterns/old-wall.png");
+	padding: 3rem 4rem;
+	border: var(--border-double);
+	border-radius: 4px;
+	box-shadow: var(--shadow-heavy);
+	max-width: 600px;
+	width: 90%;
+	text-align: center;
+	position: relative;
+	animation: modalSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.medieval-modal::before {
+	content: "";
+	position: absolute;
+	top: 6px;
+	bottom: 6px;
+	left: 6px;
+	right: 6px;
+	border: var(--border-single);
+	pointer-events: none;
+}
+
+.modal-content h2 {
+	font-family: var(--font-display);
+	color: var(--color-ink);
+	font-size: 2.5rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	margin-bottom: 1rem;
+	border-bottom: 2px solid var(--color-gold-aged);
+	padding-bottom: 0.5rem;
+}
+
+.modal-content p {
+	font-family: var(--font-serif);
+	font-size: 1.2rem;
+	color: var(--color-ink-light);
+	line-height: 1.6;
+	margin-bottom: 2rem;
+}
+
+.seal-icon {
+	font-size: 4rem;
+	margin-bottom: 1rem;
+	animation: pulse 2s infinite;
+}
+
+.btn-seal {
+	background-color: #5c1e16; /* deep red like wax */
+	color: var(--color-parchment);
+	border: 2px solid var(--color-gold-aged);
+	padding: 1rem 2rem;
+	font-family: var(--font-display);
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-seal:hover {
+	background-color: #7b281e;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(92, 30, 22, 0.4);
+}
+
+@keyframes modalSlideIn {
+	from {
+		opacity: 0;
+		transform: translateY(30px) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
 /* Scrollbar styling for a consistent look */
 ::-webkit-scrollbar {
 	width: 10px;
@@ -281,4 +390,129 @@
 	color: var(--color-gold-dark);
 	font-weight: 600;
 	font-style: normal;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (Tablettes & Mobiles)
+   ========================================= */
+@media screen and (max-width: 768px) {
+	/* Réduire les marges du grand parchemin sur petit écran */
+	.parchment-container {
+		padding: 1.5rem;
+		border: var(
+			--border-single
+		); /* Simplifier la bordure pour gagner de l'espace */
+	}
+
+	.parchment-container::before {
+		display: none; /* Enlever la bordure interne décorative sur mobile */
+	}
+
+	/* Réduire la taille de la typographie d'en-tête */
+	.form-header h1 {
+		font-size: 1.8rem;
+		letter-spacing: 1px;
+	}
+
+	/* Passer la grille Formulaire sur 1 seule colonne */
+	.form-grid {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.form-group.full-width {
+		grid-column: 1 / -1;
+	}
+
+	/* Ajuster la Modale Médiévale pour les petits écrans */
+	.medieval-modal {
+		padding: 2rem 1.5rem;
+		width: 95%;
+	}
+
+	.modal-content h2 {
+		font-size: 1.8rem;
+	}
+
+	.seal-icon {
+		font-size: 3rem;
+	}
+
+	.btn-seal {
+		padding: 0.8rem 1.5rem;
+		font-size: 1rem;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	/* Ajustements très petits écrans iPhone SE, etc. */
+	.parchment-container {
+		padding: 1rem;
+	}
+
+	.form-header h1 {
+		font-size: 1.5rem;
+	}
+
+	.form-label {
+		font-size: 0.9rem;
+	}
+
+	.form-input,
+	.form-select,
+	.form-textarea {
+		font-size: 0.95rem; /* Rester lisible mais compact */
+		padding: 0.5rem;
+	}
+
+	.form-submit {
+		padding: 0.8rem 1rem;
+		font-size: 1rem;
+	}
+
+	.medieval-modal {
+		padding: 1.5rem 1rem;
+	}
+
+	.modal-content h2 {
+		font-size: 1.4rem;
+	}
+
+	.modal-content p {
+		font-size: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.seal-icon {
+		font-size: 2.5rem;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	/* Ajustements pour les écrans ultra-fins (ex: 320px - 350px) */
+	.parchment-container {
+		padding: 0.75rem;
+	}
+
+	.form-header h1 {
+		font-size: 1.25rem;
+		letter-spacing: 0px;
+	}
+
+	.form-header p {
+		font-size: 0.85rem;
+	}
+
+	.medieval-modal {
+		padding: 1.2rem 0.8rem;
+	}
+
+	.modal-content h2 {
+		font-size: 1.2rem;
+	}
+
+	.btn-seal {
+		padding: 0.6rem 1rem;
+		font-size: 0.9rem;
+	}
 }

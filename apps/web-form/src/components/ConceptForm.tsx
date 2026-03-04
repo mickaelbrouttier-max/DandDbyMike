@@ -184,6 +184,24 @@ export default function ConceptForm() {
 		}
 	};
 
+	const resetForm = () => {
+		setSubmitStatus("idle");
+		setFormData({
+			playerName: "",
+			charName: "",
+			race: "",
+			charClass: "",
+			abilities: { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
+			features: "",
+			equipment: "",
+			spells: undefined,
+			appearance: "",
+			temperament: "",
+			history: "",
+			secret: "",
+		});
+	};
+
 	const renderEquipmentWithTooltips = (text: string): React.ReactNode => {
 		let elements: React.ReactNode[] = [text];
 
@@ -231,9 +249,18 @@ export default function ConceptForm() {
 			</div>
 
 			{submitStatus === "success" && (
-				<div className="status-message success fade-in">
-					<h2>Votre destin est scellé !</h2>
-					<p>Les archives ont bien reçu votre concept.</p>
+				<div className="modal-overlay fade-in">
+					<div className="medieval-modal modal-content flex-center">
+						<div className="seal-icon">📜</div>
+						<h2>Votre destin est scellé !</h2>
+						<p>
+							Les archives ancestrales ont réceptionné vos actes de naissance.
+							Vos choix sont désormais gravés dans la roche.
+						</p>
+						<button type="button" className="btn-seal" onClick={resetForm}>
+							Nouvelle Légende
+						</button>
+					</div>
 				</div>
 			)}
 

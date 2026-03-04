@@ -328,3 +328,116 @@
 	text-align: center;
 	padding: 2rem 0;
 }
+
+/* =========================================
+   RESPONSIVE DESIGN (Spells & Tooltips)
+   ========================================= */
+@media screen and (max-width: 768px) {
+	/* Réduire la taille minimale des colonnes de sorts pour en caser 2 si possible, sinon 1 */
+	.spell-grid {
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 0.5rem;
+	}
+
+	.spell-checkbox-label {
+		padding: 0.25rem;
+		gap: 0.5rem;
+	}
+
+	.spell-name {
+		font-size: 0.85rem; /* Un peu plus petit pour éviter la coupure */
+	}
+
+	.spell-custom-checkbox {
+		width: 18px;
+		height: 18px;
+	}
+
+	.spell-checkbox-label.selected .spell-custom-checkbox::after {
+		left: 5px;
+		top: 2px;
+	}
+
+	/* Force les Tooltips à éviter un débordement horizontal sur écran tactile */
+	.tooltip-content {
+		max-width: 85vw; /* La bulle ne peut pas dépasser 85% de l'écran */
+		font-size: 0.8rem;
+		padding: 0.8rem;
+		white-space: normal; /* Autorise le retour à la ligne */
+		left: 50% !important;
+		transform: translateX(-50%) translateY(-5px); /* Recentre toujours la bulle si elle est top */
+	}
+
+	/* L'intégration des grilles de préparation (Phase 6) */
+	.prep-columns-container {
+		grid-template-columns: 1fr; /* On empile la colonne A et B au lieu de les mettre côte à côte */
+		gap: 1.5rem;
+	}
+
+	.prep-separator {
+		width: 100%;
+		height: 40px;
+	}
+
+	.prep-separator::after {
+		/* Fait tourner la ligne séparatrice à l'horizontale */
+		width: 100%;
+		height: 2px;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		background: linear-gradient(
+			to right,
+			transparent,
+			var(--color-gold-dark),
+			transparent
+		);
+	}
+}
+
+@media screen and (max-width: 480px) {
+	/* Affichage ultra compact pour petits mobiles */
+	.spell-grid {
+		grid-template-columns: 1fr; /* Une seule colonne garantie */
+	}
+
+	.spell-limits {
+		font-size: 0.8rem;
+		text-align: left; /* Plus clair à lire en flux vertical */
+		margin-bottom: 0.5rem;
+	}
+
+	.prep-columns-container {
+		gap: 1rem;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.spell-checkbox-label {
+		padding: 0.15rem;
+		gap: 0.3rem;
+	}
+
+	.spell-name {
+		font-size: 0.8rem;
+	}
+
+	.spell-custom-checkbox {
+		width: 16px;
+		height: 16px;
+	}
+
+	/* Ajuster la coche pour la petite checkbox */
+	.spell-checkbox-label.selected .spell-custom-checkbox::after {
+		left: 4px;
+		top: 1px;
+		width: 3px;
+		height: 7px;
+	}
+
+	.tooltip-content {
+		font-size: 0.75rem;
+		padding: 0.6rem;
+		width: 90vw; /* Utiliser toute la largeur dispo sans déborder */
+	}
+}
