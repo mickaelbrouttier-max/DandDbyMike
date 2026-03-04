@@ -10,6 +10,7 @@ import {
 	ABILITY_LABELS,
 	CLASS_DATA,
 	TOOLTIP_DEFINITIONS,
+	EQUIPMENT_DESCRIPTIONS,
 	FEATURE_DESCRIPTIONS,
 	RACE_LORE,
 	CLASS_LORE,
@@ -61,17 +62,22 @@ export default function ConceptForm() {
 			);
 
 			const classConfig = CLASS_DATA[formData.charClass as CharacterClass];
+			const raceLore = formData.race ? RACE_LORE[formData.race] : undefined;
+			const hasSpells =
+				!!classConfig?.spells ||
+				(raceLore && (!!raceLore.spells || !!raceLore.spellOptions));
 
 			setFormData((prev) => ({
 				...prev,
 				abilities: autoAbilities,
 				features: classConfig?.features || "",
 				equipment: classConfig?.equipment || "",
-				spells: classConfig?.spells
+				spells: hasSpells
 					? {
 							cantrips: [],
 							level1: [],
 							preparedLevel1: [],
+							racialSpells: [],
 						}
 					: undefined,
 			}));
@@ -146,7 +152,7 @@ export default function ConceptForm() {
 						? CLASS_LORE[formData.charClass]
 						: "Inconnue",
 					Grimoire: formData.spells
-						? `Cantrips: ${formData.spells.cantrips.filter(Boolean).join(", ")} | Connus NIV 1: ${formData.spells.level1.filter(Boolean).join(", ")} | Préparés: ${formData.spells.preparedLevel1?.filter(Boolean).join(", ") || ""}`
+						? `Sort Raciaux: ${formData.spells.racialSpells?.filter(Boolean).join(", ") || "Aucun"} | Cantrips: ${formData.spells.cantrips.filter(Boolean).join(", ")} | Connus NIV 1: ${formData.spells.level1.filter(Boolean).join(", ")} | Préparés: ${formData.spells.preparedLevel1?.filter(Boolean).join(", ") || ""}`
 						: "Non applicable",
 					Apparence: formData.appearance,
 					Tempérament: formData.temperament,
@@ -176,6 +182,45 @@ export default function ConceptForm() {
 		} finally {
 			setIsSubmitting(false);
 		}
+	};
+
+	const renderEquipmentWithTooltips = (text: string): React.ReactNode => {
+		let elements: React.ReactNode[] = [text];
+
+		Object.entries(EQUIPMENT_DESCRIPTIONS).forEach(
+			([equipName, description]) => {
+				elements = elements.flatMap((part, i): React.ReactNode[] => {
+					if (typeof part !== "string") return [part];
+
+					const regex = new RegExp(`(${equipName})`, "gi");
+					const pieces = part.split(regex);
+
+					return pieces.map((piece, j): React.ReactNode => {
+						if (piece.toLowerCase() === equipName.toLowerCase()) {
+							return (
+								<Tooltip
+									key={`${equipName}-${i}-${j}`}
+									content={description}
+									position="top"
+								>
+									<span
+										style={{
+											cursor: "help",
+											borderBottom: "1px dotted var(--color-gold-dark)",
+										}}
+									>
+										{piece}
+									</span>
+								</Tooltip>
+							);
+						}
+						return piece;
+					});
+				});
+			},
+		);
+
+		return <>{elements}</>;
 	};
 
 	return (
@@ -454,18 +499,20 @@ export default function ConceptForm() {
 							</div>
 
 							<div className="form-group full-width fade-in">
-								<label className="form-label" htmlFor="equipment">
-									Équipement de Départ
-								</label>
-								<textarea
-									className={`form-textarea ${autoFilledFields ? "auto-filled" : ""}`}
-									id="equipment"
-									name="equipment"
-									value={formData.equipment || ""}
-									onChange={handleChange}
-									disabled={isSubmitting}
-									placeholder="Inventaire et armes..."
-								/>
+								<label className="form-label">Équipement de Départ</label>
+								<div
+									className={`features-display ${autoFilledFields ? "auto-filled" : ""}`}
+								>
+									<ul>
+										{formData.equipment?.split("\n").map((item, idx) => (
+											<li key={idx}>
+												{renderEquipmentWithTooltips(
+													item.replace(/^- /, "").trim(),
+												)}
+											</li>
+										))}
+									</ul>
+								</div>
 							</div>
 
 							{(formData.spells ||

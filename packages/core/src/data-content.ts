@@ -3,6 +3,11 @@ export interface RaceLore {
 	bonuses: string;
 	abilities: string[];
 	spells?: string;
+	spellOptions?: {
+		available: string[];
+		maxSelection: number;
+		label?: string;
+	};
 }
 
 export interface ClassLore {
@@ -30,6 +35,17 @@ export const RACE_LORE: Record<string, RaceLore> = {
 			"Transe",
 		],
 		spells: "Haut-Elfe : 1 sort mineur de Magicien au choix",
+		spellOptions: {
+			available: [
+				"Trait de feu",
+				"Prestidigitation",
+				"Illusion mineure",
+				"Lumière",
+				"Contact glacial",
+			],
+			maxSelection: 1,
+			label: "Sort mineur de Haut-Elfe",
+		},
 	},
 	Nain: {
 		description:

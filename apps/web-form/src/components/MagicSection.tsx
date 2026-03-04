@@ -14,7 +14,8 @@ import "../styles/spells.css";
 interface SpellState {
 	cantrips: string[];
 	level1: string[];
-	preparedLevel1: string[];
+	preparedLevel1?: string[];
+	racialSpells?: string[];
 }
 
 interface MagicSectionProps {
@@ -36,10 +37,11 @@ export default function MagicSection({
 }: MagicSectionProps) {
 	if (!charClass) return null;
 	const classConfig = CLASS_DATA[charClass];
-	const racialSpells = race ? RACE_LORE[race]?.spells : undefined;
+	const racialSpellsText = race ? RACE_LORE[race]?.spells : undefined;
+	const racialSpellOptions = race ? RACE_LORE[race]?.spellOptions : undefined;
 	const hasClassSpells = !!classConfig?.spells;
 
-	if (!hasClassSpells && !racialSpells) return null;
+	if (!hasClassSpells && !racialSpellsText && !racialSpellOptions) return null;
 
 	const knownCantrips = hasClassSpells ? classConfig.spells!.knownCantrips : 0;
 	const knownLevel1Raw = hasClassSpells ? classConfig.spells!.knownLevel1 : 0;
@@ -103,6 +105,11 @@ export default function MagicSection({
 		}
 	};
 
+	const handleRacialSpellChange = (selected: string[]) => {
+		if (!spells) return;
+		onChange({ ...spells, racialSpells: selected });
+	};
+
 	return (
 		<div className="magic-section">
 			{/* Sorts Mineurs (Cantrips) */}
@@ -131,13 +138,48 @@ export default function MagicSection({
 			)}
 
 			{/* Magie de Race */}
-			{racialSpells && (
+			{(racialSpellsText || racialSpellOptions) && (
 				<div className="spell-input-group fade-in">
-					<span className="spell-group-title">2. SORTS DE RACE</span>
-					<div className="racial-spell-box">
-						<span className="always-prepared-badge">Sort racial : </span>
-						<span>{racialSpells} (Toujours disponible)</span>
+					<div className="spell-group-header">
+						<div>
+							<span className="spell-group-title">2. SORTS DE RACE</span>
+							<p className="spell-group-subtitle">
+								Magie héritée de votre sang, toujours préparée.
+							</p>
+						</div>
 					</div>
+
+					{racialSpellOptions ? (
+						<SpellSelector
+							availableSpells={racialSpellOptions.available}
+							selectedSpells={spells?.racialSpells || []}
+							maxSelection={racialSpellOptions.maxSelection}
+							onChange={handleRacialSpellChange}
+							disabled={disabled}
+						/>
+					) : (
+						<div className="racial-spell-box">
+							<span className="always-prepared-badge">Sort racial : </span>
+							{racialSpellsText && SPELL_DESCRIPTIONS[racialSpellsText] ? (
+								<Tooltip
+									content={SPELL_DESCRIPTIONS[racialSpellsText]}
+									position="top"
+								>
+									<span
+										style={{
+											cursor: "help",
+											borderBottom: "1px dotted var(--color-gold-dark)",
+										}}
+									>
+										{racialSpellsText}
+									</span>
+								</Tooltip>
+							) : (
+								<span>{racialSpellsText}</span>
+							)}
+							<span> (Toujours disponible)</span>
+						</div>
+					)}
 				</div>
 			)}
 

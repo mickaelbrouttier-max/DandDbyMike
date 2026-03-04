@@ -58,7 +58,8 @@ export interface CharacterConcept {
 	spells?: {
 		cantrips: string[];
 		level1: string[];
-		preparedLevel1: string[];
+		preparedLevel1?: string[];
+		racialSpells?: string[];
 	};
 	appearance: string;
 	temperament: string;
