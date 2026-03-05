@@ -47,9 +47,11 @@
 		box-shadow 0.2s ease;
 }
 
-.ability-card:hover {
+.ability-card:hover,
+.ability-card:focus-within {
 	transform: translateY(-2px);
 	box-shadow: 0 6px 12px rgba(184, 153, 71, 0.2);
+	z-index: 10;
 }
 
 .ability-name {

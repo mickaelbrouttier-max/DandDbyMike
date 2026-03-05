@@ -48,8 +48,10 @@ export interface ClassConfig {
 }
 
 export interface CharacterConcept {
-	playerName: string;
+	playerFirstName: string;
+	playerLastName: string;
 	charName: string;
+	charAge: string;
 	race: Race | "";
 	charClass: CharacterClass | "";
 	abilities?: AbilityScores;
@@ -64,5 +66,7 @@ export interface CharacterConcept {
 	appearance: string;
 	temperament: string;
 	history: string;
+	startingLocation: string;
+	reasonLocation: string;
 	secret: string;
 }

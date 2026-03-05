@@ -10,7 +10,7 @@
 
 .tooltip-box {
 	position: absolute;
-	z-index: 100;
+	z-index: 9999 !important;
 
 	background-color: var(--color-parchment-light);
 	border: 1px solid var(--color-gold-dark);

@@ -25,8 +25,10 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwvndqzn";
 
 export default function ConceptForm() {
 	const [formData, setFormData] = useState<CharacterConcept>({
-		playerName: "",
+		playerFirstName: "",
+		playerLastName: "",
 		charName: "",
+		charAge: "",
 		race: "",
 		charClass: "",
 		abilities: {
@@ -43,6 +45,8 @@ export default function ConceptForm() {
 		appearance: "",
 		temperament: "",
 		history: "",
+		startingLocation: "",
+		reasonLocation: "",
 		secret: "",
 	});
 
@@ -100,31 +104,20 @@ export default function ConceptForm() {
 		}));
 	};
 
-	const handleAbilityChange = (ability: AbilityName, valueStr: string) => {
-		const value = parseInt(valueStr, 10);
-		if (isNaN(value)) return;
-
-		setFormData((prev) => ({
-			...prev,
-			abilities: {
-				...prev.abilities!,
-				[ability]: value,
-			},
-		}));
-	};
-
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
 		// Validation basique (HTML required gère déjà la majorité)
 		if (
-			!formData.playerName ||
+			!formData.playerFirstName ||
+			!formData.playerLastName ||
 			!formData.charName ||
+			!formData.charAge ||
 			!formData.race ||
 			!formData.charClass
 		) {
 			alert(
-				"Veuillez remplir les champs obligatoires (Pseudo, Nom, Race, Classe).",
+				"Veuillez remplir les champs obligatoires (Prénom Joueur, Nom Joueur, Nom Personnage, Âge Personnage, Race, Classe).",
 			);
 			return;
 		}
@@ -140,7 +133,9 @@ export default function ConceptForm() {
 					Accept: "application/json",
 				},
 				body: JSON.stringify({
-					"Pseudo Joueur": formData.playerName,
+					"Prénom Joueur": formData.playerFirstName,
+					"Nom Joueur": formData.playerLastName,
+					Âge: formData.charAge,
 					"Nom du Personnage": formData.charName,
 					Race: formData.race,
 					Classe: formData.charClass,
@@ -157,6 +152,8 @@ export default function ConceptForm() {
 					Apparence: formData.appearance,
 					Tempérament: formData.temperament,
 					Histoire: formData.history,
+					"Lieu de départ (Barzhûr)": formData.startingLocation,
+					"Raison de la présence": formData.reasonLocation,
 					"Secret / Peur": formData.secret,
 				}),
 			});
@@ -164,13 +161,17 @@ export default function ConceptForm() {
 			if (response.ok) {
 				setSubmitStatus("success");
 				setFormData({
-					playerName: "",
+					playerFirstName: "",
+					playerLastName: "",
 					charName: "",
+					charAge: "",
 					race: "",
 					charClass: "",
 					appearance: "",
 					temperament: "",
 					history: "",
+					startingLocation: "",
+					reasonLocation: "",
 					secret: "",
 				});
 			} else {
@@ -198,6 +199,8 @@ export default function ConceptForm() {
 			appearance: "",
 			temperament: "",
 			history: "",
+			startingLocation: "",
+			reasonLocation: "",
 			secret: "",
 		});
 	};
@@ -277,19 +280,55 @@ export default function ConceptForm() {
 			<form onSubmit={handleSubmit}>
 				<div className="form-grid">
 					<div className="form-group">
-						<label className="form-label" htmlFor="playerName">
-							Pseudo Joueur *
+						<label className="form-label" htmlFor="playerFirstName">
+							Prénom Joueur *
 						</label>
 						<input
 							className="form-input"
 							type="text"
-							id="playerName"
-							name="playerName"
-							value={formData.playerName}
+							id="playerFirstName"
+							name="playerFirstName"
+							value={formData.playerFirstName}
 							onChange={handleChange}
 							required
 							disabled={isSubmitting}
-							placeholder="Ex: Maître corbeau"
+							placeholder="Ex: Jean"
+						/>
+					</div>
+
+					<div className="form-group">
+						<label className="form-label" htmlFor="playerLastName">
+							Nom Joueur *
+						</label>
+						<input
+							className="form-input"
+							type="text"
+							id="playerLastName"
+							name="playerLastName"
+							value={formData.playerLastName}
+							onChange={handleChange}
+							required
+							disabled={isSubmitting}
+							placeholder="Ex: Dupont"
+						/>
+					</div>
+
+					<div className="form-group">
+						<label className="form-label" htmlFor="charAge">
+							Âge du Personnage *
+						</label>
+						<input
+							className="form-input"
+							type="number"
+							id="charAge"
+							name="charAge"
+							value={formData.charAge}
+							onChange={handleChange}
+							required
+							min="1"
+							max="120"
+							disabled={isSubmitting}
+							placeholder="Ex: 25"
 						/>
 					</div>
 
@@ -461,11 +500,7 @@ export default function ConceptForm() {
 														type="number"
 														className="ability-input"
 														value={score}
-														onChange={(e) =>
-															handleAbilityChange(ability, e.target.value)
-														}
-														min="3"
-														max="20"
+														readOnly
 														disabled={isSubmitting}
 													/>
 												</div>
@@ -595,6 +630,18 @@ export default function ConceptForm() {
 						<label className="form-label" htmlFor="history">
 							Histoire Courte
 						</label>
+						<p
+							style={{
+								marginBottom: "0.5rem",
+								fontSize: "0.9rem",
+								fontStyle: "italic",
+								opacity: 0.8,
+							}}
+						>
+							À la fin de l'histoire que vous aurez inventée, vos pas vous
+							mènent dans le village de Barzhûr, une bourgade moyenne de plus
+							d'un millier d'habitants.
+						</p>
 						<textarea
 							className="form-textarea"
 							id="history"
@@ -603,6 +650,62 @@ export default function ConceptForm() {
 							onChange={handleChange}
 							disabled={isSubmitting}
 							placeholder="D'où venez-vous ? Qu'est-ce qui vous a poussé à partir à l'aventure ?"
+						/>
+					</div>
+
+					<div className="form-group">
+						<label className="form-label" htmlFor="startingLocation">
+							Où vous trouvez-vous à Barzhûr ? *
+						</label>
+						<select
+							className="form-select"
+							id="startingLocation"
+							name="startingLocation"
+							value={formData.startingLocation}
+							onChange={handleChange}
+							required
+							disabled={isSubmitting}
+						>
+							<option value="" disabled>
+								Choisir un emplacement...
+							</option>
+							<option value="À l'auberge locale">À l'auberge locale</option>
+							<option value="Aux portes du village">
+								Aux portes du village
+							</option>
+							<option value="Dans les rues de Barzhûr">
+								Dans les rues de Barzhûr
+							</option>
+							<option value="Chez le forgeron ou artisan">
+								Chez le forgeron ou artisan
+							</option>
+							<option value="Au campement des voyageurs">
+								Au campement des voyageurs
+							</option>
+							<option value="Dans le cimetière">Dans le cimetière</option>
+							<option value="Dans les bois environnants">
+								Dans les bois environnants
+							</option>
+							<option value="Dans l'église">Dans l'église</option>
+							<option value="Sur la place du marché">
+								Sur la place du marché
+							</option>
+						</select>
+					</div>
+
+					<div className="form-group full-width">
+						<label className="form-label" htmlFor="reasonLocation">
+							Pourquoi ici ? *
+						</label>
+						<textarea
+							className="form-textarea"
+							id="reasonLocation"
+							name="reasonLocation"
+							value={formData.reasonLocation}
+							onChange={handleChange}
+							required
+							disabled={isSubmitting}
+							placeholder="Pourquoi étiez vous dans cette partie du village ?"
 						/>
 					</div>
 
