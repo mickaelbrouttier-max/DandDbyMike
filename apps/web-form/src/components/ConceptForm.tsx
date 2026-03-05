@@ -630,7 +630,7 @@ export default function ConceptForm() {
 
 					<div className="form-group full-width">
 						<label className="form-label" htmlFor="history">
-							Histoire Courte
+							Votre Histoire
 						</label>
 						<p
 							style={{
