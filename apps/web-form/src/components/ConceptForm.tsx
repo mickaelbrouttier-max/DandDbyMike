@@ -188,8 +188,10 @@ export default function ConceptForm() {
 	const resetForm = () => {
 		setSubmitStatus("idle");
 		setFormData({
-			playerName: "",
+			playerFirstName: "",
+			playerLastName: "",
 			charName: "",
+			charAge: "",
 			race: "",
 			charClass: "",
 			abilities: { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
